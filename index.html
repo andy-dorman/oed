@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="/css/lightgallery.css"/>
+    <link rel="stylesheet"
+          href="/css/oed.css"/>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  </head>
+
+  <div class="container">
+    <h1>OED</h1>
+    <div id="oed-portfolio">
+      <div class="grid-sizer"></div>
+      <div class="gutter-sizer"></div>
+    </div>
+    <pre id="config">
+    </pre>
+  </div>
+  <footer>
+    <h4>CONTACT</h4>
+    <a href="mailto:oliver@oliveredgedesign.com">oliver@oliveredgedesign.com</a>
+    <div class="copyright">
+      &copy;Copyright OED 2017
+    </div>
+  </footer>
+  <script type="text/javascript" <script type="text/javascript" src="http://plugin.bearsthemes.com/jquery/MasonryHybrid/jquery-3.1.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script type="text/javascript" src="http://plugin.bearsthemes.com/jquery/MasonryHybrid/isotope.pkgd.min.js"></script>
+<script type="text/javascript" src="http://plugin.bearsthemes.com/jquery/MasonryHybrid/jquery.masonry-hybrid.min.js"></script>
+  <script type="text/javascript" src="/js/tether.min.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+          integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+          crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/g/lightgallery"></script>
+  <script type="text/javascript">
+    let grid;
+    function setMasonry() {
+      const screenWidth = $(window).width();
+      if (screenWidth > 320) {
+        grid.elem.trigger('grid:refresh', {col: 1, space: 30});
+      }
+
+      if (screenWidth > 480) {
+        grid.elem.trigger('grid:refresh', {col: 1, space: 30});
+      }
+
+      if (screenWidth > 640) {
+        grid.elem.trigger('grid:refresh', {col: 2, space: 30});
+      }
+
+      if (screenWidth > 780) {
+        grid.elem.trigger('grid:refresh', {col: 3, space: 30});
+      }
+
+      if (screenWidth > 980) {
+        grid.elem.trigger('grid:refresh', {col: 4, space: 30});
+      }
+
+      if (screenWidth > 1200) {
+        grid.elem.trigger('grid:refresh', {col: 4, space: 30});
+      }
+    }
+    jQuery.ajax({
+      url: "oed.conf",
+      success: result => {
+        const oed = JSON.parse(result);
+        Object.keys(oed.portfolio).forEach(key => {
+          const images = oed.portfolio[key].images || [`${key}_main.jpg`];
+          const item = $('<div class="grid-item"></div>');
+          const portfolio = $('<div class="portfolio"></div>');
+          const imageLinks = [];
+
+          images.forEach(image => {
+            imageLinks.push($(`<a href="/assets/portfolio/${image}"></a>`))
+          });
+          const thumb = $(`<img src="/assets/portfolio/thumbs/${oed.portfolio[key].thumb || key + '_thumb.jpg'}"/>`);
+
+          const info = $('<div class="info"></div>');
+          const title = $(`<div class="title">${oed.portfolio[key].title}</div>`);
+          const categories = $(`<div class="categories">${oed.portfolio[key].categories.join(', ')}</div>`);
+          title.appendTo(info);
+          categories.appendTo(info);
+          thumb.appendTo(imageLinks[0]);
+          let count = 0;
+
+          imageLinks.forEach(image => {
+            image.appendTo(portfolio);
+          });
+          portfolio.appendTo(item);
+          info.appendTo(item);
+          item.appendTo('#oed-portfolio');
+        });
+        const portfolio = $('#oed-portfolio .grid-item .portfolio')
+        portfolio.lightGallery({
+          download: false,
+          counter: false
+        });
+        var $grid_demo_multiple_columns = $('#oed-portfolio');
+        grid = new MasonryHybrid($grid_demo_multiple_columns, {col: 4, space: 10});
+        portfolio.on('onBeforeOpen.lg',event => {
+            $('.container h1').addClass('hide');
+            $('footer').addClass('hide');
+        });
+        portfolio.on('onCloseAfter.lg',event => {
+            $('.container h1').removeClass('hide');
+            $('footer').removeClass('hide');
+        });
+        setMasonry();
+      }
+    });
+    // JS
+    $(window).resize(() => {
+      setMasonry();
+    });
+    // Update col & space
+    //grid.elem.trigger('grid:refresh', {col: 5, space: 20});
+  </script>
+</html>
