@@ -16,7 +16,7 @@
 }
 
 h1 {
-  margin-top: 50px;
+  margin-top: 20px;
   width: 100%;
   text-align: center;
   letter-spacing: 15px;
@@ -45,11 +45,11 @@ hr {
 }
 
 footer {
-  margin-top: 40px;
   position: relative;
   -webkit-transition: bottom 0.5s; /* Safari */
   transition: bottom 0.5s;
-  bottom: 0;
+  bottom: 20px;
+  font-family: 'johnston_itcmedium';
 }
 
 footer.hide {
