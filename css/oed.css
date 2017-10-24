@@ -49,7 +49,7 @@ footer {
   -webkit-transition: bottom 0.5s; /* Safari */
   transition: bottom 0.5s;
   bottom: 20px;
-  font-family: 'johnston_itcmedium';
+  font-family: 'johnston_itclight';
 }
 
 footer.hide {
@@ -80,6 +80,7 @@ footer a:hover {
 
 footer h4,
 .lg-sub-html footer h4 {
+  font-family: 'johnston_itcmedium';
   font-weight: normal;
   margin-bottom: 12px;
   font-size: 1.1em
@@ -87,8 +88,9 @@ footer h4,
 
 footer .copyright {
   margin-top: 10px;
-  font-size: .9em;
+  font-size: .8em;
   margin-bottom: 50px;
+  letter-spacing: 1px;
 }
 
 #oed-portfolio .grid-item img {
